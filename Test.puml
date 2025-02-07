@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class GameManager {
+    - time: float
+    - score: int
+    - grid: Grid
+    - explosionCount: int
+    - inputHandler: InputHandler
+    +start(): void
+    +processInput(): void
+    +end(EndReason reason): void
+}
+class InputHandler {
+    +lastCoord: int[2]
+    +lastInput: Input
+    +awaitInput(): Input
+}
+
+note top of GameManager : stores game state,\nhandles game operations
+
+enum Input {
+    FLAG,
+    INTERACT,
+    COORD
+}
+
+enum EndReason {
+    WIN,
+    EXPLOSION
+}
+
+enum TileState {
+    HIDDEN,
+    FLAGGED,
+    REVEALED
+}
+
+class Grid {
+    +width: int
+    +height: int
+    +grid: Tile[][]
+    -initialiseExplosionTiles(int explosionCount): void
+    -initialiseNumberTiles(): void
+    +setupTiles(): void
+}
+
+abstract class Tile {
+    - state: TileState
+    +interact(): void
+    +display(): void
+}
+
+class NumberTile extends Tile {
+    +nearbyExplosions: int
+}
+class ExplosionTile extends Tile {
+}
+
+GameManager <-- Grid
+GameManager <-- InputHandler
+Grid <-- Tile
+@enduml
