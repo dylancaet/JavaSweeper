@@ -12,12 +12,12 @@ public class NumberTile extends Tile
 
     public void setExplosionsNearby(int nearby)
     {
-        this.explosionsNearby = nearby;
+        explosionsNearby = nearby;
     }
 
     public int getExplosionsNearby()
     {
-        return this.explosionsNearby;
+        return explosionsNearby;
     }
 
     @Override

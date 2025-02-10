@@ -7,10 +7,11 @@ import main.minesweeper.tile.Tile;
 import java.util.*;
 
 public class Grid {
+    public final int height;
+    public final int width;
+    public final int explosives;
+
     private long seed;
-    private int height;
-    private int width;
-    private int explosives;
     private Tile[][] grid;
     private HashMap<int[], Tile> explosiveLocations;
     private Random random;
@@ -32,7 +33,7 @@ public class Grid {
     }
 
     public void setupTiles(){
-        this.grid = new Tile[height][width];
+        grid = new Tile[height][width];
         initExplosionTiles();
         initNumberTiles(); // for smaller grids, it should be fine to initialise them all at the start
     }
