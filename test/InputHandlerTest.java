@@ -30,8 +30,8 @@ public class InputHandlerTest
         inputHandler.forceInput("3x10");
 
         assertEquals(GameInput.COORD, inputHandler.getLastInput());
-        assertEquals(3, inputHandler.getLastCoord()[0]);
-        assertEquals(10, inputHandler.getLastCoord()[1]);
+        assertEquals(2, inputHandler.getLastCoord()[0]);
+        assertEquals(9, inputHandler.getLastCoord()[1]);
     }
 }
 

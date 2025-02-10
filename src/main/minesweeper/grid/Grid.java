@@ -3,6 +3,7 @@ package main.minesweeper.grid;
 import main.minesweeper.tile.ExplosiveTile;
 import main.minesweeper.tile.NumberTile;
 import main.minesweeper.tile.Tile;
+import main.minesweeper.tile.TileState;
 
 import java.util.*;
 
@@ -111,7 +112,14 @@ public class Grid {
     }
 
     public void flag(int[] coord) {
+        // 0:row, 1:col
+        Tile tile = grid[coord[1]][coord[0]];
+        TileState state = tile.getState();
 
+        if (state == TileState.REVEALED)
+            return;
+
+        tile.setState(state == TileState.FLAGGED ? TileState.HIDDEN : TileState.FLAGGED);
     }
 
     public HashMap<int[], Tile> getExplosiveLocations() {

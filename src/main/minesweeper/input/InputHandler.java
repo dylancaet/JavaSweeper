@@ -44,8 +44,8 @@ public class InputHandler
 
         if (coordPattern.matcher(userInput).find()) {
             int indexOfX = userInput.indexOf('x');
-            int x = Integer.parseInt(userInput.substring(0, indexOfX));
-            int y = Integer.parseInt(userInput.substring(indexOfX+1, userInput.length()));
+            int x = Integer.parseInt(userInput.substring(0, indexOfX))-1;
+            int y = Integer.parseInt(userInput.substring(indexOfX+1, userInput.length()))-1;
 
             lastCoord[0] = x;
             lastCoord[1] = y;
