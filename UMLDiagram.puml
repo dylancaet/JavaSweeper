@@ -37,6 +37,7 @@ enum TileState {
 }
 
 class Grid {
+    +seed: int
     +width: int
     +height: int
     +grid: Tile[][]
@@ -60,4 +61,21 @@ class ExplosionTile extends Tile {
 GameManager <-- Grid
 GameManager <-- InputHandler
 Grid <-- Tile
+
+note as N1
+Functional requirements
+- Text based user interface
+- Retrieve user input
+- Minesweeper game logic
+    - Tile interactions
+    - Grid initialisation
+    - Reset game
+
+Non-functional requirements
+- Difficulty
+- Timer
+- Score
+- A nice looking TUI
+endnote
+
 @enduml
