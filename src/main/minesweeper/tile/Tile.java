@@ -3,6 +3,7 @@ package main.minesweeper.tile;
 public abstract class Tile {
     public final int x;
     public final int y;
+    private String icon;
     private TileState state;
 
     public Tile(int x, int y) {
@@ -14,5 +15,11 @@ public abstract class Tile {
         return state;
     }
 
-    public abstract char getIcon();
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 }

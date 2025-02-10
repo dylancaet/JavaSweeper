@@ -53,8 +53,9 @@ public class Grid {
         }
     }
 
+    // future: would be better to store tiles in groups, makes floodfill fast & quicker
     private void initNumberTiles(){
-
+        
     }
 
     public Tile getTile(int column, int row)
