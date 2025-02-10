@@ -1,4 +1,4 @@
-package main.minesweeper.grid;
+package main.minesweeper.game;
 
 import main.minesweeper.tile.ExplosiveTile;
 import main.minesweeper.tile.NumberTile;
@@ -7,7 +7,7 @@ import main.minesweeper.tile.TileState;
 
 import java.util.*;
 
-public class Grid {
+public class GameLogic {
     public final int height;
     public final int width;
     public final int explosives;
@@ -17,7 +17,7 @@ public class Grid {
     private HashMap<int[], Tile> explosiveLocations;
     private Random random;
 
-    public Grid(int height, int width, int explosives) {
+    public GameLogic(int height, int width, int explosives) {
         this.height = height;
         this.width = width;
         this.explosives = explosives;
@@ -27,7 +27,7 @@ public class Grid {
         this.random = new Random(this.seed);
     }
 
-    public Grid(int height, int width, int explosives, int seed) {
+    public GameLogic(int height, int width, int explosives, int seed) {
         this(height, width, explosives);
         this.seed = seed;
         this.random = new Random(this.seed);
@@ -107,6 +107,9 @@ public class Grid {
         return grid[column][row];
     }
 
+    // floodfill 0 number tiles
+    // reveal >0 number tiles
+    // explode explosive tiles
     public void interact(int[] coord) {
 
     }

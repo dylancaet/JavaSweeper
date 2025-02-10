@@ -1,4 +1,4 @@
-import main.minesweeper.grid.Grid;
+import main.minesweeper.game.GameLogic;
 import main.minesweeper.tile.ExplosiveTile;
 import main.minesweeper.tile.Tile;
 import org.junit.jupiter.api.Test;
@@ -8,13 +8,13 @@ import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GridTest {
+public class GameLogicTest {
     @Test
     void ensure_explosive_count_map() {
         int expectedExplosions = 5;
         int foundExplosions = 0;
 
-        Grid g = new Grid(8, 10, 5);
+        GameLogic g = new GameLogic(8, 10, 5);
         g.setupTiles();
 
         for (Tile t : g.getExplosiveLocations().values()) {
@@ -30,7 +30,7 @@ public class GridTest {
         int expectedExplosions = 5;
         int foundExplosions = 0;
 
-        Grid g = new Grid(8, 10, expectedExplosions);
+        GameLogic g = new GameLogic(8, 10, expectedExplosions);
         g.setupTiles();
 
         for (int c = 0; c < 8; c++) {
@@ -46,7 +46,7 @@ public class GridTest {
 
     @Test
     void get_surrounding_tiles_most_left() {
-        Grid g = new Grid(8, 10, 5);
+        GameLogic g = new GameLogic(8, 10, 5);
         g.setupTiles();
 
         HashSet<Tile> confirmed_tiles = new HashSet<Tile>();
@@ -67,7 +67,7 @@ public class GridTest {
 
     @Test
     void get_surrounding_tiles_most_right() {
-        Grid g = new Grid(8, 4, 5);
+        GameLogic g = new GameLogic(8, 4, 5);
         g.setupTiles();
 
         HashSet<Tile> confirmed_tiles = new HashSet<Tile>();

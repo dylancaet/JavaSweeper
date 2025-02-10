@@ -1,20 +1,18 @@
 package main.minesweeper.game;
 
-import main.minesweeper.grid.Grid;
 import main.minesweeper.input.GameInput;
 import main.minesweeper.input.InputHandler;
-import main.minesweeper.tile.Tile;
 import main.minesweeper.tile.TileState;
 
 public class GameManager
 {
-    private Grid grid;
+    private GameLogic grid;
     private InputHandler inputHandler;
     private boolean alive = false;
 
     public GameManager(int explosionCount, int width, int height)
     {
-        this.grid = new Grid(height, width, explosionCount);
+        this.grid = new GameLogic(height, width, explosionCount);
         this.inputHandler = new InputHandler();
     }
 
@@ -39,6 +37,7 @@ public class GameManager
                 break;
             }
             case INTERACT: {
+                grid.interact(inputHandler.getLastCoord());
                 break;
             }
         }
