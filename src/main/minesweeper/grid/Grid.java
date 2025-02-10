@@ -54,7 +54,6 @@ public class Grid {
 
     // future: would be better to store tiles in groups, makes floodfill fast & quicker
     private void initNumberTiles(){
-        // this doesn't seem correct but works
         for (int col = 0; col < height; col++)
         {
             for (int row = 0; row < width; row++)
@@ -62,7 +61,18 @@ public class Grid {
                 if (grid[col][row] != null)
                     continue;
 
-                grid[col][row] = new NumberTile(row, col);
+                NumberTile tile = new NumberTile(row, col);
+
+                int nearbyExplosives = 0;
+                ArrayList<Tile> surrounding = getSurroundingTiles(row, col);
+                for (Tile t : surrounding)
+                {
+                    if (t instanceof ExplosiveTile)
+                        nearbyExplosives++;
+                }
+                tile.setExplosionsNearby(nearbyExplosives);
+
+                grid[col][row] = tile;
             }
         }
     }
