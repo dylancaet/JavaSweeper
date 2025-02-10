@@ -15,4 +15,23 @@ public class InputHandlerTest
 
         assertEquals(GameInput.FLAG, inputHandler.getLastInput());
     }
+
+    @Test
+    void receive_interact_input() {
+        InputHandler inputHandler = new InputHandler();
+        inputHandler.forceInput("interact");
+
+        assertEquals(GameInput.INTERACT, inputHandler.getLastInput());
+    }
+
+    @Test
+    void receive_coord_input() {
+        InputHandler inputHandler = new InputHandler();
+        inputHandler.forceInput("3x10");
+
+        assertEquals(GameInput.COORD, inputHandler.getLastInput());
+        assertEquals(3, inputHandler.getLastCoord()[0]);
+        assertEquals(10, inputHandler.getLastCoord()[1]);
+    }
 }
+
