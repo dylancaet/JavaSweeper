@@ -1,11 +1,10 @@
 package main.minesweeper.grid;
 
 import main.minesweeper.tile.ExplosiveTile;
+import main.minesweeper.tile.NumberTile;
 import main.minesweeper.tile.Tile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class Grid {
     private long seed;
@@ -55,7 +54,40 @@ public class Grid {
 
     // future: would be better to store tiles in groups, makes floodfill fast & quicker
     private void initNumberTiles(){
-        
+        // this doesn't seem correct but works
+        for (int col = 0; col < height; col++)
+        {
+            for (int row = 0; row < width; row++)
+            {
+                if (grid[col][row] != null)
+                    continue;
+
+                grid[col][row] = new NumberTile(row, col);
+            }
+        }
+    }
+
+    /*
+        0 1 2   x=0,y=1 = 1 2
+        3 4 5             4 5
+        6 7 8             7 8
+     */
+    public ArrayList<Tile> getSurroundingTiles(int r, int c) {
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+
+        for (int col = -1; col < 2; col++)
+        {
+            for (int row = -1; row < 2; row++)
+            {
+                // checks 0, 1, 2, 3, 6
+                if (c+col < 0 || r+row < 0 || c+col >= height || r+row >= width || (c+col == c && r+row == r))
+                    continue;
+
+                tiles.add(getTile(c+col, r+row));
+            }
+        }
+
+        return tiles;
     }
 
     public Tile getTile(int column, int row)

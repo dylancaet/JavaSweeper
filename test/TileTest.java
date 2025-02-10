@@ -12,4 +12,6 @@ public class TileTest
 
         assertEquals("4", t.getIcon());
     }
+
+
 }
