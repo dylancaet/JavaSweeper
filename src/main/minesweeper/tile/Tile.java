@@ -9,14 +9,26 @@ public abstract class Tile {
     public Tile(int row, int col) {
         this.row = row;
         this.col = col;
+        this.state = TileState.HIDDEN;
     }
 
     public TileState getState(){
         return state;
     }
 
+    public void setState(TileState tileState)
+    {
+        state = tileState;
+    }
+
+
     public String getIcon() {
-        return icon;
+        switch (state) {
+            case HIDDEN: return " ";
+            case FLAGGED: return "⚑";
+            case REVEALED: return icon;
+            default: return "ERR";
+        }
     }
 
     public void setIcon(String icon) {

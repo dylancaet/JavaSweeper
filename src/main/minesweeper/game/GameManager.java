@@ -2,6 +2,7 @@ package main.minesweeper.game;
 
 import main.minesweeper.grid.Grid;
 import main.minesweeper.input.InputHandler;
+import main.minesweeper.tile.TileState;
 
 public class GameManager
 {
@@ -26,9 +27,30 @@ public class GameManager
         {
             for (int row = 0; row < grid.width; row++)
             {
-                System.out.print(grid.getTile(col, row).getIcon() + "|");
+                System.out.print(grid.getTile(col, row).getIcon() + " | ");
             }
             System.out.print("\n");
         }
     }
+
+    public void tick() {
+        display();
+
+        inputHandler.awaitInput();
+    }
+
+    public boolean isAlive(){
+        return alive;
+    }
+
+    public void debug(boolean value) {
+        for (int i = 0; i < grid.height; i++)
+        {
+            for (int j = 0; j < grid.width; j++)
+            {
+                grid.getTile(i, j).setState(TileState.REVEALED);
+            }
+        }
+    }
+
 }

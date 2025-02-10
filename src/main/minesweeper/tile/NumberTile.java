@@ -13,15 +13,11 @@ public class NumberTile extends Tile
     public void setExplosionsNearby(int nearby)
     {
         explosionsNearby = nearby;
+        setIcon(charSet[explosionsNearby]);
     }
 
     public int getExplosionsNearby()
     {
         return explosionsNearby;
-    }
-
-    @Override
-    public String getIcon() {
-        return charSet[explosionsNearby];
     }
 }
