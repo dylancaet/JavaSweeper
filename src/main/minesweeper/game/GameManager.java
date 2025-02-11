@@ -54,9 +54,18 @@ public class GameManager
 
     public void display()
     {
+
+        System.out.print(" ");
+        for (int i = 0; i < game.width; i++)
+        {
+            System.out.print("  "+(i+1)+" ");
+        }
+        System.out.print("\n");
+
         int[] lastCoord = inputHandler.getLastCoord();
         for (int col = 0; col < game.height; col++)
         {
+            System.out.print(col+1 + "|");
             for (int row = 0; row < game.width; row++)
             {
                 if (lastCoord != null)
@@ -64,11 +73,11 @@ public class GameManager
                     int coordRow = lastCoord[0];
                     int coordCol = lastCoord[1];
                     if (coordRow == row && coordCol == col) {
-                        System.out.print("\033[51m"+game.getTile(col, row).getIcon() + " \033[0m| ");
+                        System.out.print("\033[47m "+game.getTile(col, row).getIcon() + " \033[0m|");
                         continue;
                     }
                 }
-                System.out.print(game.getTile(col, row).getIcon() + " | ");
+                System.out.print(game.getTile(col, row).getIcon() + "  |");
             }
             System.out.print("\n");
         }
