@@ -18,6 +18,7 @@ public class GameLogic {
     private Random random;
     private EndReason endReason;
     private boolean gameOver;
+    private int revealed;
 
     public GameLogic(int height, int width, int explosives) {
         this.height = height;
@@ -28,6 +29,7 @@ public class GameLogic {
         this.seed = System.currentTimeMillis();
         this.random = new Random(this.seed);
         this.gameOver = false;
+        this.revealed = 0;
     }
 
     public GameLogic(int height, int width, int explosives, long seed) {
@@ -136,7 +138,11 @@ public class GameLogic {
 
         // NUMBER TILE
         if (tile instanceof NumberTile) {
-            floodfill(col, row);
+            int tilesRevealed = floodfill(col, row, 0);
+            revealed += tilesRevealed;
+            if (revealed+explosives == width*height) {
+                endGame(EndReason.WIN);
+            }
         }
 
         // EXPLOSION TILE
@@ -160,27 +166,35 @@ public class GameLogic {
         return gameOver;
     }
 
-    private void floodfill(int col, int row)
+    private int floodfill(int col, int row, int revealed)
     {
         Tile currentTile = grid[col][row];
         if (currentTile.getState() == TileState.REVEALED && !(currentTile instanceof NumberTile))
-            return;
+            return 0;
+
+        int tilesRevealed = revealed;
 
         currentTile.setState(TileState.REVEALED);
+        tilesRevealed++;
+
         if (((NumberTile) currentTile).getExplosionsNearby() > 0)
-            return;
+            return tilesRevealed;
 
         ArrayList<Tile> surroundingTiles = getSurroundingTiles(row, col);
         for (Tile t : surroundingTiles) {
             if (!(t instanceof NumberTile))
                 continue;
             if (((NumberTile) t).getExplosionsNearby() == 0 && t.getState() != TileState.REVEALED) {
-                floodfill(t.col, t.row);
+                tilesRevealed += floodfill(t.col, t.row, 0);
             } else if (((NumberTile) t).getExplosionsNearby() > 0) {
-                t.setState(TileState.REVEALED);
+                if (t.getState() != TileState.REVEALED) {
+                    t.setState(TileState.REVEALED);
+                    tilesRevealed++;
+                }
             }
         }
 
+        return tilesRevealed;
     }
 
     public void flag(int col, int row) {

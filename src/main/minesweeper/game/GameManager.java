@@ -60,7 +60,6 @@ public class GameManager
 
     public void display()
     {
-
         System.out.print(" ");
         for (int i = 0; i < game.width; i++)
         {
