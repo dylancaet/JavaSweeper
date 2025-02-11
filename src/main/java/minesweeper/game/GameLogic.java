@@ -14,7 +14,7 @@ public class GameLogic {
 
     private long seed;
     private Tile[][] grid;
-    private HashMap<int[], ExplosiveTile> explosiveLocations; // r, c
+    private HashMap<ArrayList<Integer>, ExplosiveTile> explosiveLocations; // r, c
     private Random random;
     private EndReason endReason;
     private boolean gameOver;
@@ -24,7 +24,7 @@ public class GameLogic {
         this.height = height;
         this.width = width;
         this.explosives = explosives;
-        this.explosiveLocations = new HashMap<int[], ExplosiveTile>();
+        this.explosiveLocations = new HashMap<ArrayList<Integer>, ExplosiveTile>();
         this.grid = new Tile[height][width];
         this.seed = System.currentTimeMillis();
         this.random = new Random(this.seed);
@@ -46,16 +46,17 @@ public class GameLogic {
 
     private void initExplosionTiles(){
         while (explosiveLocations.size() < explosives) {
-            int[] coord = new int[2];
-            coord[0] = random.nextInt(0, width);
-            coord[1] = random.nextInt(0, height);
+            // cant use int[] for hash, differs each object not values
+            ArrayList<Integer> coord = new ArrayList<Integer>(2);
+            coord.add(0, random.nextInt(0, width));
+            coord.add(1, random.nextInt(0, height));
 
             if (explosiveLocations.containsKey(coord))
                 continue;
 
-            ExplosiveTile tile = new ExplosiveTile(coord[0], coord[1]);
+            ExplosiveTile tile = new ExplosiveTile(coord.get(0), coord.get(1));
             explosiveLocations.put(coord, tile);
-            grid[coord[1]][coord[0]] =  tile;
+            grid[coord.get(1)][coord.get(0)] =  tile;
         }
     }
 
@@ -208,7 +209,12 @@ public class GameLogic {
         tile.setState(state == TileState.FLAGGED ? TileState.HIDDEN : TileState.FLAGGED);
     }
 
-    public HashMap<int[], ExplosiveTile> getExplosiveLocations() {
+    public HashMap<ArrayList<Integer>, ExplosiveTile> getExplosiveLocations() {
         return explosiveLocations;
+    }
+
+    public long getSeed()
+    {
+        return seed;
     }
 }

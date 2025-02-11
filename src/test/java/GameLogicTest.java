@@ -34,8 +34,26 @@ public class GameLogicTest {
     void ensure_explosive_count_manual() {
         int expectedExplosions = 5;
         int foundExplosions = 0;
-
         GameLogic g = new GameLogic(8, 10, expectedExplosions);
+        g.setupTiles();
+
+        for (int c = 0; c < 8; c++) {
+            for (int r = 0; r < 10; r++)
+            {
+                if (g.getTile(c, r) instanceof ExplosiveTile)
+                    foundExplosions++;
+            }
+        }
+
+        assertEquals(expectedExplosions, foundExplosions);
+    }
+
+    @Test
+    void ensure_duplicate_explosive_check_manual()
+    {
+        int expectedExplosions = 5;
+        int foundExplosions = 0;
+        GameLogic g = new GameLogic(8, 10, expectedExplosions, 1739281486964L);
         g.setupTiles();
 
         for (int c = 0; c < 8; c++) {

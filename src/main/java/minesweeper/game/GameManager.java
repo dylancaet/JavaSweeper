@@ -86,6 +86,7 @@ public class GameManager
             }
             System.out.print("\n");
         }
+        System.out.println("actions: flag, interact, 'X'x'Y'");
     }
 
     public boolean isAlive(){
