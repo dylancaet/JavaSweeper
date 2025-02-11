@@ -2,22 +2,23 @@ package main.minesweeper.game;
 
 import main.minesweeper.input.GameInput;
 import main.minesweeper.input.InputHandler;
+import main.minesweeper.tile.ExplosiveTile;
 import main.minesweeper.tile.TileState;
 
 public class GameManager
 {
-    private GameLogic grid;
+    private GameLogic game;
     private InputHandler inputHandler;
     private boolean alive = false;
 
-    public GameManager(int explosionCount, int width, int height)
+    public GameManager(int explosionCount, int width, int height, long seed)
     {
-        this.grid = new GameLogic(height, width, explosionCount);
+        this.game = new GameLogic(height, width, explosionCount, seed);
         this.inputHandler = new InputHandler();
     }
 
     public void start() {
-        grid.setupTiles();
+        game.setupTiles();
         alive = true;
     }
 
@@ -27,17 +28,21 @@ public class GameManager
         GameInput input = inputHandler.awaitInput();
 
         processInput(input);
+
+        if (game.isOver())
+            alive = false;
     }
 
     public void processInput(GameInput input) {
+        int[] lastCoord = inputHandler.getLastCoord();
         switch (input)
         {
             case FLAG: {
-                grid.flag(inputHandler.getLastCoord());
+                game.flag(lastCoord[1], lastCoord[0]);
                 break;
             }
             case INTERACT: {
-                grid.interact(inputHandler.getLastCoord());
+                game.interact(lastCoord[1], lastCoord[0]);
                 break;
             }
         }
@@ -46,20 +51,20 @@ public class GameManager
     public void display()
     {
         int[] lastCoord = inputHandler.getLastCoord();
-        for (int col = 0; col < grid.height; col++)
+        for (int col = 0; col < game.height; col++)
         {
-            for (int row = 0; row < grid.width; row++)
+            for (int row = 0; row < game.width; row++)
             {
                 if (lastCoord != null)
                 {
                     int coordRow = lastCoord[0];
                     int coordCol = lastCoord[1];
                     if (coordRow == row && coordCol == col) {
-                        System.out.print("\033[51m"+grid.getTile(col, row).getIcon() + " \033[0m| ");
+                        System.out.print("\033[51m"+game.getTile(col, row).getIcon() + " \033[0m| ");
                         continue;
                     }
                 }
-                System.out.print(grid.getTile(col, row).getIcon() + " | ");
+                System.out.print(game.getTile(col, row).getIcon() + " | ");
             }
             System.out.print("\n");
         }
@@ -70,13 +75,25 @@ public class GameManager
     }
 
     public void debug(boolean value) {
-        for (int i = 0; i < grid.height; i++)
+//        for (int i = 0; i < game.height; i++)
+//        {
+//            for (int j = 0; j < game.width; j++)
+//            {
+//                game.getTile(i, j).setState(TileState.REVEALED);
+//            }
+//        }
+//
+        for (ExplosiveTile t : game.getExplosiveLocations().values())
         {
-            for (int j = 0; j < grid.width; j++)
-            {
-                grid.getTile(i, j).setState(TileState.REVEALED);
-            }
+            t.setState(TileState.REVEALED);
         }
     }
 
+    public InputHandler getInputHandler() {
+        return inputHandler;
+    }
+
+    public GameLogic getGame() {
+        return game;
+    }
 }

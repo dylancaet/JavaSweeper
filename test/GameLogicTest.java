@@ -1,6 +1,10 @@
 import main.minesweeper.game.GameLogic;
+import main.minesweeper.game.GameManager;
+import main.minesweeper.input.GameInput;
 import main.minesweeper.tile.ExplosiveTile;
+import main.minesweeper.tile.NumberTile;
 import main.minesweeper.tile.Tile;
+import main.minesweeper.tile.TileState;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -80,6 +84,34 @@ public class GameLogicTest {
         for(Tile t: tiles) {
             confirmed_tiles.remove(t);
         }
+
+        assertEquals(0, confirmed_tiles.size());
+    }
+
+    @Test
+    void floodfill_test() {
+        GameManager g = new GameManager(10, 10, 8, 5555555);
+        g.start();
+
+        g.getInputHandler().forceInput("1x1");
+        g.processInput(GameInput.INTERACT);
+//        g.display();
+
+        HashSet<Tile> confirmed_tiles = new HashSet<Tile>();
+        confirmed_tiles.add(g.getGame().getTile(0, 0));
+        confirmed_tiles.add(g.getGame().getTile(0, 1));
+        confirmed_tiles.add(g.getGame().getTile(0, 2));
+        confirmed_tiles.add(g.getGame().getTile(0, 3));
+        confirmed_tiles.add(g.getGame().getTile(1, 0));
+        confirmed_tiles.add(g.getGame().getTile(1, 1));
+        confirmed_tiles.add(g.getGame().getTile(1, 2));
+        confirmed_tiles.add(g.getGame().getTile(1, 3));
+        confirmed_tiles.add(g.getGame().getTile(2, 0));
+        confirmed_tiles.add(g.getGame().getTile(2, 1));
+        confirmed_tiles.add(g.getGame().getTile(2, 2));
+        confirmed_tiles.add(g.getGame().getTile(2, 3));
+
+        confirmed_tiles.removeIf(t -> t.getState() == TileState.REVEALED);
 
         assertEquals(0, confirmed_tiles.size());
     }

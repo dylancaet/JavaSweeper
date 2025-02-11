@@ -14,20 +14,20 @@ public class GameLogic {
 
     private long seed;
     private Tile[][] grid;
-    private HashMap<int[], Tile> explosiveLocations;
+    private HashMap<int[], ExplosiveTile> explosiveLocations;
     private Random random;
 
     public GameLogic(int height, int width, int explosives) {
         this.height = height;
         this.width = width;
         this.explosives = explosives;
-        this.explosiveLocations = new HashMap<int[], Tile>();
+        this.explosiveLocations = new HashMap<int[], ExplosiveTile>();
         this.grid = new Tile[height][width];
         this.seed = System.currentTimeMillis();
         this.random = new Random(this.seed);
     }
 
-    public GameLogic(int height, int width, int explosives, int seed) {
+    public GameLogic(int height, int width, int explosives, long seed) {
         this(height, width, explosives);
         this.seed = seed;
         this.random = new Random(this.seed);
@@ -91,8 +91,8 @@ public class GameLogic {
         {
             for (int row = -1; row < 2; row++)
             {
-                // checks 0, 1, 2, 3, 6
-                if (c+col < 0 || r+row < 0 || c+col >= height || r+row >= width || (c+col == c && r+row == r))
+                // checks 0, 1, 2, 3, 6, 5, 7, 8
+                if (c+col < 0 || r+row < 0 || c+col >= height || r+row >= width || (col == 0 && row == r))
                     continue;
 
                 tiles.add(getTile(c+col, r+row));
@@ -102,6 +102,24 @@ public class GameLogic {
         return tiles;
     }
 
+    public ArrayList<Tile> getAdjacentTiles(int r, int c)
+    {
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+
+        // top(+0, +1) left(-1, +0) right(+1, +0) down(+0, -1)
+        if (isWithinGrid(r, c+1)) tiles.add(grid[c+1][r]);
+        if (isWithinGrid(r-1, c)) tiles.add(grid[c][r-1]);
+        if (isWithinGrid(r+1, c)) tiles.add(grid[c][r+1]);
+        if (isWithinGrid(r, c-1)) tiles.add(grid[c-1][r]);
+
+        return tiles;
+    }
+
+    private boolean isWithinGrid(int r, int c)  {
+        return r >= 0 && c >= 0 && r < width && c < height;
+    }
+
+
     public Tile getTile(int column, int row)
     {
         return grid[column][row];
@@ -110,13 +128,48 @@ public class GameLogic {
     // floodfill 0 number tiles
     // reveal >0 number tiles
     // explode explosive tiles
-    public void interact(int[] coord) {
+    public void interact(int col, int row) {
+        Tile tile = grid[col][row];
+
+        // NUMBER TILE
+        if (tile instanceof NumberTile) {
+            floodfill(col, row);
+        }
+
+        // EXPLOSION TILE
 
     }
 
-    public void flag(int[] coord) {
+    public boolean isOver()
+    {
+        return false;
+    }
+
+    private void floodfill(int col, int row)
+    {
+        Tile currentTile = grid[col][row];
+        if (currentTile.getState() != TileState.REVEALED && currentTile instanceof NumberTile)
+        {
+            currentTile.setState(TileState.REVEALED);
+            if (((NumberTile) currentTile).getExplosionsNearby() > 0)
+                return;
+
+            ArrayList<Tile> surroundingTiles = getSurroundingTiles(row, col);
+            for (Tile t : surroundingTiles) {
+                if (!(t instanceof NumberTile))
+                    continue;
+                if (((NumberTile) t).getExplosionsNearby() == 0 && t.getState() != TileState.REVEALED) {
+                    floodfill(t.col, t.row);
+                } else if (((NumberTile) t).getExplosionsNearby() > 0) {
+                    t.setState(TileState.REVEALED);
+                }
+            }
+        }
+    }
+
+    public void flag(int col, int row) {
         // 0:row, 1:col
-        Tile tile = grid[coord[1]][coord[0]];
+        Tile tile = grid[col][row];
         TileState state = tile.getState();
 
         if (state == TileState.REVEALED)
@@ -125,7 +178,7 @@ public class GameLogic {
         tile.setState(state == TileState.FLAGGED ? TileState.HIDDEN : TileState.FLAGGED);
     }
 
-    public HashMap<int[], Tile> getExplosiveLocations() {
+    public HashMap<int[], ExplosiveTile> getExplosiveLocations() {
         return explosiveLocations;
     }
 }
