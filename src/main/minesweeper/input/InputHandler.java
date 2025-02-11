@@ -11,11 +11,13 @@ public class InputHandler
 
     private GameInput lastInput;
     private int[] lastCoord;
+    private int[] maxCoord;
 
-    public InputHandler() {
+    public InputHandler(int[] maximumCoord) {
         this.reader = new Scanner(System.in);
         this.coordPattern = Pattern.compile("^[0-9]+x[0-9]+$");
         this.lastCoord = new int[2];
+        this.maxCoord = maximumCoord;
     }
 
     public GameInput awaitInput()
@@ -46,6 +48,9 @@ public class InputHandler
             int indexOfX = userInput.indexOf('x');
             int x = Integer.parseInt(userInput.substring(0, indexOfX))-1;
             int y = Integer.parseInt(userInput.substring(indexOfX+1, userInput.length()))-1;
+
+            if (x < 0 || y < 0 || x > maxCoord[0] || y > maxCoord[1])
+                return GameInput.INVALID;
 
             lastCoord[0] = x;
             lastCoord[1] = y;

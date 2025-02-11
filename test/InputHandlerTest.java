@@ -10,7 +10,7 @@ public class InputHandlerTest
 {
     @Test
     void receive_flag_input() {
-        InputHandler inputHandler = new InputHandler();
+        InputHandler inputHandler = new InputHandler(new int[]{1, 1});
         inputHandler.forceInput("flag");
 
         assertEquals(GameInput.FLAG, inputHandler.getLastInput());
@@ -18,7 +18,7 @@ public class InputHandlerTest
 
     @Test
     void receive_interact_input() {
-        InputHandler inputHandler = new InputHandler();
+        InputHandler inputHandler = new InputHandler(new int[]{1, 1});
         inputHandler.forceInput("interact");
 
         assertEquals(GameInput.INTERACT, inputHandler.getLastInput());
@@ -26,7 +26,7 @@ public class InputHandlerTest
 
     @Test
     void receive_coord_input() {
-        InputHandler inputHandler = new InputHandler();
+        InputHandler inputHandler = new InputHandler(new int[]{4, 10});
         inputHandler.forceInput("3x10");
 
         assertEquals(GameInput.COORD, inputHandler.getLastInput());

@@ -14,8 +14,10 @@ public class GameLogic {
 
     private long seed;
     private Tile[][] grid;
-    private HashMap<int[], ExplosiveTile> explosiveLocations;
+    private HashMap<int[], ExplosiveTile> explosiveLocations; // r, c
     private Random random;
+    private EndReason endReason;
+    private boolean gameOver;
 
     public GameLogic(int height, int width, int explosives) {
         this.height = height;
@@ -25,6 +27,7 @@ public class GameLogic {
         this.grid = new Tile[height][width];
         this.seed = System.currentTimeMillis();
         this.random = new Random(this.seed);
+        this.gameOver = false;
     }
 
     public GameLogic(int height, int width, int explosives, long seed) {
@@ -137,34 +140,47 @@ public class GameLogic {
         }
 
         // EXPLOSION TILE
+        if (tile instanceof ExplosiveTile) {
+            // gameover + reveal all explosives
+            endGame(EndReason.EXPLOSION);
+        }
 
+    }
+
+    private void endGame(EndReason reason) {
+        for (ExplosiveTile t : getExplosiveLocations().values())
+            t.setState(TileState.REVEALED);
+
+        endReason = reason;
+        gameOver = true;
     }
 
     public boolean isOver()
     {
-        return false;
+        return gameOver;
     }
 
     private void floodfill(int col, int row)
     {
         Tile currentTile = grid[col][row];
-        if (currentTile.getState() != TileState.REVEALED && currentTile instanceof NumberTile)
-        {
-            currentTile.setState(TileState.REVEALED);
-            if (((NumberTile) currentTile).getExplosionsNearby() > 0)
-                return;
+        if (currentTile.getState() == TileState.REVEALED && !(currentTile instanceof NumberTile))
+            return;
 
-            ArrayList<Tile> surroundingTiles = getSurroundingTiles(row, col);
-            for (Tile t : surroundingTiles) {
-                if (!(t instanceof NumberTile))
-                    continue;
-                if (((NumberTile) t).getExplosionsNearby() == 0 && t.getState() != TileState.REVEALED) {
-                    floodfill(t.col, t.row);
-                } else if (((NumberTile) t).getExplosionsNearby() > 0) {
-                    t.setState(TileState.REVEALED);
-                }
+        currentTile.setState(TileState.REVEALED);
+        if (((NumberTile) currentTile).getExplosionsNearby() > 0)
+            return;
+
+        ArrayList<Tile> surroundingTiles = getSurroundingTiles(row, col);
+        for (Tile t : surroundingTiles) {
+            if (!(t instanceof NumberTile))
+                continue;
+            if (((NumberTile) t).getExplosionsNearby() == 0 && t.getState() != TileState.REVEALED) {
+                floodfill(t.col, t.row);
+            } else if (((NumberTile) t).getExplosionsNearby() > 0) {
+                t.setState(TileState.REVEALED);
             }
         }
+
     }
 
     public void flag(int col, int row) {

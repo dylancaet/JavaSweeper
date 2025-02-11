@@ -14,7 +14,7 @@ public class GameManager
     public GameManager(int explosionCount, int width, int height, long seed)
     {
         this.game = new GameLogic(height, width, explosionCount, seed);
-        this.inputHandler = new InputHandler();
+        this.inputHandler = new InputHandler(new int[]{width-1, height-1});
     }
 
     public void start() {
@@ -31,6 +31,10 @@ public class GameManager
 
         if (game.isOver())
             alive = false;
+    }
+
+    public void end() {
+        display();
     }
 
     public void processInput(GameInput input) {
