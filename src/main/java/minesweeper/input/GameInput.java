@@ -4,5 +4,5 @@ public enum GameInput {
     INVALID,
     FLAG,
     INTERACT,
-    COORD
+    COORD,
 }

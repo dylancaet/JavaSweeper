@@ -25,7 +25,7 @@ public abstract class Tile {
     public String getIcon() {
         switch (state) {
             case HIDDEN: return " ";
-            case FLAGGED: return "⚑";
+            case FLAGGED: return "F";
             case REVEALED: return icon;
             default: return "ERR";
         }

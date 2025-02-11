@@ -41,6 +41,18 @@ public class GameManager
 
     public void end() {
         display();
+        switch (game.getEndReason())
+        {
+            case EndReason.EXPLOSION:
+                System.out.println("YOU LOST");
+                break;
+            case EndReason.WIN:
+                System.out.println("you win");
+                break;
+            default:
+                System.out.println("GAME OVER");
+                break;
+        }
     }
 
     public void processInput(GameInput input) {
@@ -60,6 +72,10 @@ public class GameManager
 
     public void display()
     {
+        // VERY HACKY - DisplayHandler class?
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
         System.out.print(" ");
         for (int i = 0; i < game.width; i++)
         {
@@ -78,7 +94,7 @@ public class GameManager
                     int coordRow = lastCoord[0];
                     int coordCol = lastCoord[1];
                     if (coordRow == row && coordCol == col) {
-                        System.out.print("\033[51m "+game.getTile(col, row).getIcon() + " \033[0m|");
+                        System.out.print("\033[100m "+game.getTile(col, row).getIcon() + " \033[0m|");
                         continue;
                     }
                 }

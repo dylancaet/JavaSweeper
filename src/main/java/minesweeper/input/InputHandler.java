@@ -32,7 +32,7 @@ public class InputHandler
     }
 
     private GameInput interpretInput(String userInput) {
-        switch (userInput) {
+        switch (userInput.toLowerCase()) {
             case "flag": {
                 lastInput = GameInput.FLAG;
                 return GameInput.FLAG;

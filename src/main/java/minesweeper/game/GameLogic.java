@@ -217,4 +217,9 @@ public class GameLogic {
     {
         return seed;
     }
+
+    public EndReason getEndReason()
+    {
+        return endReason;
+    }
 }
