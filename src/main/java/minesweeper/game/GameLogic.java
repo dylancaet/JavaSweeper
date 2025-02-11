@@ -1,9 +1,9 @@
-package main.minesweeper.game;
+package main.java.minesweeper.game;
 
-import main.minesweeper.tile.ExplosiveTile;
-import main.minesweeper.tile.NumberTile;
-import main.minesweeper.tile.Tile;
-import main.minesweeper.tile.TileState;
+import main.java.minesweeper.tile.ExplosiveTile;
+import main.java.minesweeper.tile.NumberTile;
+import main.java.minesweeper.tile.Tile;
+import main.java.minesweeper.tile.TileState;
 
 import java.util.*;
 

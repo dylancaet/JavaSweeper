@@ -1,7 +1,6 @@
-package main.minesweeper.input;
+package main.java.minesweeper.input;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputHandler

@@ -1,8 +1,8 @@
-import main.minesweeper.input.GameInput;
-import main.minesweeper.input.InputHandler;
-import org.junit.jupiter.api.Test;
+package test.java;
 
-import java.io.ByteArrayInputStream;
+import main.java.minesweeper.input.GameInput;
+import main.java.minesweeper.input.InputHandler;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

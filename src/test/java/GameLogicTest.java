@@ -1,10 +1,11 @@
-import main.minesweeper.game.GameLogic;
-import main.minesweeper.game.GameManager;
-import main.minesweeper.input.GameInput;
-import main.minesweeper.tile.ExplosiveTile;
-import main.minesweeper.tile.NumberTile;
-import main.minesweeper.tile.Tile;
-import main.minesweeper.tile.TileState;
+package test.java;
+
+import main.java.minesweeper.game.GameLogic;
+import main.java.minesweeper.game.GameManager;
+import main.java.minesweeper.input.GameInput;
+import main.java.minesweeper.tile.ExplosiveTile;
+import main.java.minesweeper.tile.Tile;
+import main.java.minesweeper.tile.TileState;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

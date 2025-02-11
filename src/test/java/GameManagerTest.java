@@ -1,4 +1,4 @@
-import org.junit.jupiter.api.Test;
+package test.java;
 
 public class GameManagerTest {
 

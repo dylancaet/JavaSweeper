@@ -1,4 +1,4 @@
-package main.minesweeper.game;
+package main.java.minesweeper.game;
 
 public enum EndReason {
     QUIT,

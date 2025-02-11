@@ -1,6 +1,6 @@
-package main.minesweeper;
+package main.java.minesweeper;
 
-import main.minesweeper.game.GameManager;
+import main.java.minesweeper.game.GameManager;
 
 public class Main {
     public static void main(String[] args) {

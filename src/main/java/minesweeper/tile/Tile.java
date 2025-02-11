@@ -1,4 +1,4 @@
-package main.minesweeper.tile;
+package main.java.minesweeper.tile;
 
 public abstract class Tile {
     public final int row;

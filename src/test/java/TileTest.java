@@ -1,5 +1,7 @@
-import main.minesweeper.tile.NumberTile;
-import main.minesweeper.tile.TileState;
+package test.java;
+
+import main.java.minesweeper.tile.NumberTile;
+import main.java.minesweeper.tile.TileState;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +14,7 @@ public class TileTest
         t.setState(TileState.REVEALED);
         t.setExplosionsNearby(4);
 
-        assertEquals("4", t.getIcon());
+        assertEquals("\u001B[34m4\u001B[0m", t.getIcon());
     }
 
 

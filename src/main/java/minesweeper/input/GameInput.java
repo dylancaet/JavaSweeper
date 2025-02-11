@@ -1,4 +1,4 @@
-package main.minesweeper.input;
+package main.java.minesweeper.input;
 
 public enum GameInput {
     INVALID,

@@ -1,9 +1,9 @@
-package main.minesweeper.game;
+package main.java.minesweeper.game;
 
-import main.minesweeper.input.GameInput;
-import main.minesweeper.input.InputHandler;
-import main.minesweeper.tile.ExplosiveTile;
-import main.minesweeper.tile.TileState;
+import main.java.minesweeper.input.GameInput;
+import main.java.minesweeper.input.InputHandler;
+import main.java.minesweeper.tile.ExplosiveTile;
+import main.java.minesweeper.tile.TileState;
 
 public class GameManager
 {
