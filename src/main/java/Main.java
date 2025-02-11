@@ -1,4 +1,4 @@
-package main.java.minesweeper;
+package main.java;
 
 import main.java.minesweeper.game.GameManager;
 
