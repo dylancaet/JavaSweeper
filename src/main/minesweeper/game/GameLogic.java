@@ -95,7 +95,7 @@ public class GameLogic {
             for (int row = -1; row < 2; row++)
             {
                 // checks 0, 1, 2, 3, 6, 5, 7, 8
-                if (c+col < 0 || r+row < 0 || c+col >= height || r+row >= width || (col == 0 && row == r))
+                if (c+col < 0 || r+row < 0 || c+col >= height || r+row >= width || (col == 0 && row == 0))
                     continue;
 
                 tiles.add(getTile(c+col, r+row));

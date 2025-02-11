@@ -17,6 +17,12 @@ public class GameManager
         this.inputHandler = new InputHandler(new int[]{width-1, height-1});
     }
 
+    public GameManager(int explosionCount, int width, int height)
+    {
+        this.game = new GameLogic(height, width, explosionCount);
+        this.inputHandler = new InputHandler(new int[]{width-1, height-1});
+    }
+
     public void start() {
         game.setupTiles();
         alive = true;
@@ -73,11 +79,11 @@ public class GameManager
                     int coordRow = lastCoord[0];
                     int coordCol = lastCoord[1];
                     if (coordRow == row && coordCol == col) {
-                        System.out.print("\033[47m "+game.getTile(col, row).getIcon() + " \033[0m|");
+                        System.out.print("\033[51m "+game.getTile(col, row).getIcon() + " \033[0m|");
                         continue;
                     }
                 }
-                System.out.print(game.getTile(col, row).getIcon() + "  |");
+                System.out.print(" "+game.getTile(col, row).getIcon() + " |");
             }
             System.out.print("\n");
         }
